@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "outDir": "./lib",
+    "noImplicitAny": true,
+    "target": "es5",
+    "jsx": "react",
+    "lib": ["es2015"],
+    "esModuleInterop": true,
+    "declaration": true
+  },
+  "include": [
+    "./src/**/*"
+  ]
+}
