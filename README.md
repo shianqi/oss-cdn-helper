@@ -9,7 +9,7 @@ npm install oss-cdn-helper --save-dev
 2. 
 
 ```javascript
-import OssCdnHelper from 'oss-cdn-helper
+import OssCdnHelper from 'oss-cdn-helper'
 
 const process = async () => {
   await OssCdnHelper.upload({
