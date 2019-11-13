@@ -13,9 +13,17 @@ const refresh = (
   type: RefreshObjectType
 ) => new Promise((resolve, reject) => {
   let paths
-  if (type === RefreshObjectType.Directory && config.paths) {
+  if (
+    type === RefreshObjectType.Directory
+      && config.paths
+      && config.paths.length
+  ) {
     paths = config.paths
-  } else if (type === RefreshObjectType.File && config.files) {
+  } else if (
+    type === RefreshObjectType.File
+      && config.files
+      && config.paths.length
+  ) {
     paths = config.files
   } else {
     resolve()
