@@ -10,6 +10,7 @@ export interface UploadConfig {
 
 export interface RefreshCDNConfig {
   enabled: boolean
+  log: boolean
   paths?: string[]
   files?: string[]
 }

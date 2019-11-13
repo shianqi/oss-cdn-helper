@@ -2,12 +2,26 @@ import ALY from 'aliyun-sdk'
 import { getEnv } from './utils'
 import { RefreshCDNConfig } from './types'
 
+enum RefreshObjectType {
+  Directory = 'Directory',
+  File = 'File'
+}
+
 const refresh = (
   cdn: any,
-  paths: string[],
-  type: ('Directory' | 'File')
+  config: RefreshCDNConfig,
+  type: RefreshObjectType
 ) => new Promise((resolve, reject) => {
-  const fileStr = paths.join(' \n')
+  let paths
+  if (type === RefreshObjectType.Directory && config.paths) {
+    paths = config.paths
+  } else if (type === RefreshObjectType.File && config.files) {
+    paths = config.files
+  } else {
+    resolve()
+  }
+
+  const fileStr = paths.join('\n')
 
   cdn.refreshObjectCaches(
     {
@@ -18,7 +32,12 @@ const refresh = (
       if (err) {
         reject(err)
       }
-      console.log('\nRefresh files complete !')
+
+      if (config.log) {
+        console.log(`\n${type}:\n${fileStr}\n`)
+      }
+
+      console.log(`\nRefresh ${type} complete !`)
       resolve(res)
     }
   )
@@ -37,13 +56,8 @@ const refreshCDN = async (config: RefreshCDNConfig) => {
     return
   }
 
-  if (config.paths) {
-    await refresh(cdn, config.paths, 'Directory')
-  }
-
-  if (config.files) {
-    await refresh(cdn, config.files, 'File')
-  }
+  await refresh(cdn, config, RefreshObjectType.Directory)
+  await refresh(cdn, config, RefreshObjectType.File)
 }
 
 export default refreshCDN
