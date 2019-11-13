@@ -22,7 +22,7 @@ const refresh = (
   } else if (
     type === RefreshObjectType.File
       && config.files
-      && config.paths.length
+      && config.files.length
   ) {
     paths = config.files
   } else {
