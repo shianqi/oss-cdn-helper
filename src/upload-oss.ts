@@ -133,6 +133,7 @@ class Uploader {
       })
     )
     console.log('\nUpload complete !')
+    return this.uploadList
   }
 
   clean() {

@@ -29,6 +29,10 @@
         paths: [
           'http://www.baidu.com/public/',
           'https://www.baidu.com/public/'
+        ],
+        files: [
+          'http://www.baidu.com/public/index.html',
+          'https://www.baidu.com/public/index.html'
         ]
       })
     }

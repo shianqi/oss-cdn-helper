@@ -32,6 +32,16 @@ test('getUploadOption', async () => {
 })
 
 test('getUploadOption', async () => {
+  const filePath = path.resolve(__dirname, './build/utils/index.js')
+  const uploadOption = await uploader.getUploadOption('utils/index.js', filePath)
+  expect(uploadOption).toEqual({
+    fileName: 'utils/index.js',
+    filePath,
+    md5: 'AF910CB083A78FE2F5AFAEEC4D859225'
+  })
+})
+
+test('getUploadOption', async () => {
   const filePath = path.resolve(__dirname, './build/main.html')
   const uploadOption = await uploader.getUploadOption('main.html', filePath)
   expect(uploadOption).toEqual({
