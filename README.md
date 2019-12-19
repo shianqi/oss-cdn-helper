@@ -4,64 +4,72 @@
 
 1. 安装相关依赖：
 
-    ```bash
-    npm install oss-cdn-helper --save-dev
-    ```
+   ```bash
+   npm install oss-cdn-helper --save-dev
+   ```
 
 1. 部署并刷新 CDN
 
-    ```javascript
-    import path from 'path'
-    import OssCdnHelper from 'oss-cdn-helper'
+   ```javascript
+   import path from "path";
+   import OssCdnHelper from "oss-cdn-helper";
 
-    const process = async () => {
-      await OssCdnHelper.upload({
-        uploadPath: path.resolve(__dirname, '../build'),
-        targetPath: '/target',
-        region: 'oss-cn-beijing',
-        bucket: 'tp-hansel-dev',
-        removeHtmlSuffix: true,
-        removeHtmlSuffixIgnore: [],
-        cleanTargetPath: false
-      })
-      await OssCdnHelper.refresh({
-        enabled: true,
-        paths: [
-          'http://www.baidu.com/public/',
-          'https://www.baidu.com/public/'
-        ],
-        files: [
-          'http://www.baidu.com/public/index.html',
-          'https://www.baidu.com/public/index.html'
-        ]
-      })
-    }
+   const process = async () => {
+     const files = await OssCdnHelper.upload({
+       uploadPath: path.resolve(__dirname, "../build"),
+       targetPath: "/target",
+       region: "oss-cn-beijing",
+       bucket: "tp-hansel-dev",
+       removeHtmlSuffix: true,
+       removeHtmlSuffixIgnore: [],
+       cleanTargetPath: false
+     });
+     // files:
+     // { fileName: '/target/index',
+     //   filePath:
+     //    '/Users/shianqi/workspace/node/oss-cdn-helper/test/build/index.html',
+     //   option: { headers: [Object] } },
+     // { fileName: '/target/main',
+     //   filePath:
+     //    '/Users/shianqi/workspace/node/oss-cdn-helper/test/build/main.html',
+     //   option: { headers: [Object] } },
+     // ....
+     await OssCdnHelper.refresh({
+       enabled: true,
+       paths: ["http://www.baidu.com/public/", "https://www.baidu.com/public/"],
+       files: [
+         "http://www.baidu.com/public/index.html",
+         "https://www.baidu.com/public/index.html"
+       ]
+     });
+   };
 
-    process()
-    ```
+   process();
+   ```
 
 ## 参数
 
 ```javascript
 await OssCdnHelper.upload({
-  uploadPath: path.resolve(__dirname, '../build'), // 要上传的文件夹，绝对路径
-  targetPath: '/target',                           // 上传到 OSS 上文件夹的位置
-  region: 'oss-cn-beijing',                        // OSS 位置
-  bucket: 'tp-hansel-dev',                         // bucket 名称
-  removeHtmlSuffix: true,                          // 是否去掉 .html 后缀上传
-  removeHtmlSuffixIgnore: [],                      // 忽略去掉 .html 后缀的路径
-  cleanTargetPath: false                           // 上传前是否先清空 OSS 上的目标文件夹（暂时无效）
-})
+  uploadPath: path.resolve(__dirname, "../build"), // 要上传的文件夹，绝对路径
+  targetPath: "/target", // 上传到 OSS 上文件夹的位置
+  region: "oss-cn-beijing", // OSS 位置
+  bucket: "tp-hansel-dev", // bucket 名称
+  removeHtmlSuffix: true, // 是否去掉 .html 后缀上传
+  removeHtmlSuffixIgnore: [], // 忽略去掉 .html 后缀的路径
+  cleanTargetPath: false // 上传前是否先清空 OSS 上的目标文件夹（暂时无效）
+});
 
 await OssCdnHelper.refresh({
-  enabled: true,                                   // 是否刷新 CDN
-  paths: [                                         // 要刷新的 CDN 的 URL 地址
-    'http://www.baidu.com/public/',
-    'https://www.baidu.com/public/'
+  enabled: true, // 是否刷新 CDN
+  paths: [
+    // 要刷新的 CDN 的 URL 地址
+    "http://www.baidu.com/public/",
+    "https://www.baidu.com/public/"
   ]
-})
+});
 ```
 
 ## TODO
 
-* 上传前清空目标文件夹
+- 上传前清空目标文件夹

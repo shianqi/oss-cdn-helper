@@ -7,49 +7,46 @@ enum RefreshObjectType {
   File = 'File'
 }
 
-const refresh = (
-  cdn: any,
-  config: RefreshCDNConfig,
-  type: RefreshObjectType
-) => new Promise((resolve, reject) => {
-  let paths
-  if (
-    type === RefreshObjectType.Directory
-      && config.paths
-      && config.paths.length
-  ) {
-    paths = config.paths
-  } else if (
-    type === RefreshObjectType.File
-      && config.files
-      && config.files.length
-  ) {
-    paths = config.files
-  } else {
-    resolve()
-  }
-
-  const fileStr = paths.join('\n')
-
-  cdn.refreshObjectCaches(
-    {
-      ObjectType: type,
-      ObjectPath: fileStr
-    },
-    (err: any, res: any) => {
-      if (err) {
-        reject(err)
-      }
-
-      if (config.log) {
-        console.log(`\n${type}:\n${fileStr}\n`)
-      }
-
-      console.log(`\nRefresh ${type} complete !`)
-      resolve(res)
+const refresh = (cdn: any, config: RefreshCDNConfig, type: RefreshObjectType) =>
+  new Promise((resolve, reject) => {
+    let paths
+    if (
+      type === RefreshObjectType.Directory &&
+      config.paths &&
+      config.paths.length
+    ) {
+      paths = config.paths
+    } else if (
+      type === RefreshObjectType.File &&
+      config.files &&
+      config.files.length
+    ) {
+      paths = config.files
+    } else {
+      resolve()
     }
-  )
-})
+
+    const fileStr = paths.join('\n')
+
+    cdn.refreshObjectCaches(
+      {
+        ObjectType: type,
+        ObjectPath: fileStr
+      },
+      (err: any, res: any) => {
+        if (err) {
+          reject(err)
+        }
+
+        if (config.log) {
+          console.log(`\n${type}:\n${fileStr}\n`)
+        }
+
+        console.log(`\nRefresh ${type} complete !`)
+        resolve(res)
+      }
+    )
+  })
 
 const refreshCDN = async (config: RefreshCDNConfig) => {
   console.log('\nStart Refresh CDN...')

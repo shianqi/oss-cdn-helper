@@ -8,7 +8,7 @@ const uploader = new Uploader({
   bucket: 'tp-hansel-dev',
   removeHtmlSuffix: true,
   removeHtmlSuffixIgnore: ['index.html'],
-  cleanTargetPath: false,
+  cleanTargetPath: false
 })
 
 test('getFileName', async () => {
@@ -33,7 +33,10 @@ test('getUploadOption', async () => {
 
 test('getUploadOption', async () => {
   const filePath = path.resolve(__dirname, './build/utils/index.js')
-  const uploadOption = await uploader.getUploadOption('utils/index.js', filePath)
+  const uploadOption = await uploader.getUploadOption(
+    'utils/index.js',
+    filePath
+  )
   expect(uploadOption).toEqual({
     fileName: 'utils/index.js',
     filePath,
@@ -78,35 +81,36 @@ test('uploadFolder', async () => {
   })
 
   spy.mockRestore()
+  console.log(uploader.uploadList)
 
   expect(uploader.uploadList).toEqual([
     {
-      fileName: "/target/index",
+      fileName: '/target/index',
       filePath: path.resolve(__dirname, './build/index.html'),
-      option:  {
-        "headers":  {
-          "Content-Type": "text/html"
+      option: {
+        headers: {
+          'Content-Type': 'text/html'
         }
       }
     },
     {
-      "fileName": "/target/main",
-      "filePath": path.resolve(__dirname, './build/main.html'),
-      "option":  {
-        "headers":  {
-          "Content-Type": "text/html"
+      fileName: '/target/main',
+      filePath: path.resolve(__dirname, './build/main.html'),
+      option: {
+        headers: {
+          'Content-Type': 'text/html'
         }
       }
     },
     {
-      "fileName": "/target/main.js",
-      "filePath": path.resolve(__dirname, './build/main.js'),
-      "option": undefined
+      fileName: '/target/main.js',
+      filePath: path.resolve(__dirname, './build/main.js'),
+      option: undefined
     },
     {
-      "fileName": "/target/utils/index.js",
-      "filePath": path.resolve(__dirname, './build/utils/index.js'),
-      "option": undefined
+      fileName: '/target/utils/index.js',
+      filePath: path.resolve(__dirname, './build/utils/index.js'),
+      option: undefined
     }
   ])
 })

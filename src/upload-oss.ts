@@ -6,21 +6,22 @@ import { getEnv, getFileMd5 } from './utils'
 import { UploadConfig } from './types'
 
 interface uploadFolderOptions {
-  uploadPath: string,
+  uploadPath: string
   targetPath: string
 }
 
 class Uploader {
   store: any
   uploadList: {
-    fileName: string,
-    filePath: string,
+    fileName: string
+    filePath: string
     option: {}
   }[]
+
   bar?: ProgressBar
   uploadConfig: UploadConfig
 
-  constructor(uploadConfig: UploadConfig) {
+  constructor (uploadConfig: UploadConfig) {
     const { bucket, region } = uploadConfig
 
     this.uploadConfig = uploadConfig
@@ -35,7 +36,7 @@ class Uploader {
     })
   }
 
-  async isExist(path: string, md5: string) {
+  async isExist (path: string, md5: string) {
     let isExist = true
 
     try {
@@ -84,7 +85,7 @@ class Uploader {
     }
   }
 
-  async uploadFolder(options: uploadFolderOptions) {
+  async uploadFolder (options: uploadFolderOptions) {
     const { uploadPath, targetPath } = options
 
     const names = fs.readdirSync(uploadPath)
@@ -106,16 +107,21 @@ class Uploader {
           })
         }
       } else {
-        await this.uploadFolder({ uploadPath: filepath, targetPath: suffixPath })
+        await this.uploadFolder({
+          uploadPath: filepath,
+          targetPath: suffixPath
+        })
       }
     }
   }
 
-  async upload() {
+  async upload () {
     const { uploadPath, targetPath } = this.uploadConfig
     const absoluteUploadPath = path.resolve(__dirname, uploadPath)
 
-    console.log(`Upload new static resource to ${JSON.stringify(this.uploadConfig)}`)
+    console.log(
+      `Upload new static resource to ${JSON.stringify(this.uploadConfig)}`
+    )
     console.log(`Folder path: ${absoluteUploadPath}`)
 
     await this.uploadFolder({
@@ -136,7 +142,7 @@ class Uploader {
     return this.uploadList
   }
 
-  clean() {
+  clean () {
     console.log('Clean OSS files...')
     console.log('Clean complete')
   }
