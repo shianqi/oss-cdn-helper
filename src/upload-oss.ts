@@ -91,7 +91,14 @@ class Uploader {
     const names = fs.readdirSync(uploadPath)
     for (const name of names) {
       const filepath = path.resolve(uploadPath, name)
-      const suffixPath = `${targetPath}/${name}`
+
+      let suffixPath
+
+      if (/\/$/.test(targetPath)) {
+        suffixPath = `${targetPath}${name}`
+      } else {
+        suffixPath = `${targetPath}/${name}`
+      }
 
       if (fs.statSync(filepath).isFile()) {
         const uploadOption = await this.getUploadOption(suffixPath, filepath)

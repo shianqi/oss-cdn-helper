@@ -2,7 +2,8 @@
   "compilerOptions": {
     "outDir": "./lib",
     "noImplicitAny": true,
-    "target": "es5",
+    "target": "ESNext",
+    "module": "commonjs",
     "jsx": "react",
     "lib": ["es2015"],
     "esModuleInterop": true,

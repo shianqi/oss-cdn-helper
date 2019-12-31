@@ -77,7 +77,7 @@ test('uploadFolder', async () => {
 
   await uploader.uploadFolder({
     uploadPath: path.resolve(__dirname, './build'),
-    targetPath: '/target'
+    targetPath: '/target/'
   })
 
   spy.mockRestore()
